@@ -3,14 +3,10 @@ import { Stack } from "expo-router";
 import { StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-
-
 export default function RootLayout() {
-  return <SafeAreaView style={styles.container}>
-    <Stack screenOptions={screenOptions}>
+  return <Stack screenOptions={screenOptions}>
       <Stack.Screen name="(home)" />
     </Stack>
-  </SafeAreaView>
 }
 
 const screenOptions: NativeStackNavigationOptions = {
@@ -19,6 +15,6 @@ const screenOptions: NativeStackNavigationOptions = {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1
+    flex: 1,
   }
 })

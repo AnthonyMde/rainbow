@@ -1,9 +1,11 @@
+import { LinearGradient } from "expo-linear-gradient";
 import React, { useRef, useState } from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import PagerView from "react-native-pager-view";
-import Animated, { useAnimatedStyle, useSharedValue, withSpring } from "react-native-reanimated";
+import Animated, { useAnimatedStyle, useSharedValue } from "react-native-reanimated";
 import HistoryScreen from "./history";
 import HomeScreen from "./home";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 enum Tabs {
     Home = "Home",
@@ -11,60 +13,70 @@ enum Tabs {
 }
 
 const HomePager = () => {
-    const [tabWidth, setTabWidth] = useState(0);
-    const [activeTab, setActiveTab] = useState<Tabs>(Tabs.Home);
-    const pagerRef = useRef<PagerView>(null);
+    const [tabWidth, setTabWidth] = useState(0)
+    const [activeTab, setActiveTab] = useState<Tabs>(Tabs.Home)
+    const insets = useSafeAreaInsets()
+    const pagerRef = useRef<PagerView>(null)
 
-    const translateX = useSharedValue(0);
+    const translateX = useSharedValue(0)
     const animatedStyle = useAnimatedStyle(() => ({
         transform: [{ translateX: translateX.value }],
-    }));
+    }))
 
     return (
-        <View style={styles.container}>
-            <View
-                style={styles.tabsContainer}
-                onLayout={(e) => setTabWidth(e.nativeEvent.layout.width / Object.values(Tabs).length)}
-            >
-                <Animated.View style={[styles.slider, animatedStyle, { width: tabWidth }]} />
-                {Object.values(Tabs).map((tab, index) => (
-                    <TouchableOpacity
-                        key={tab}
-                        style={styles.tab}
-                        onPress={() => pagerRef.current?.setPage(index)}
-                    >
-                        <Text style={activeTab === tab ? styles.activeTabText : styles.tabText}>
-                            {tab}
-                        </Text>
-                    </TouchableOpacity>
-                ))}
-            </View>
+        <LinearGradient
+            colors={["#F5F8FF", "#F9EAF4", "#FDC5D8"]}
+            locations={[0, 0.75, 1]}
+            start={{ x: 0, y: 0 }}
+            end={{ x: 1, y: 1 }}
+            style={[styles.gradient, {paddingTop: insets.top, paddingBottom: insets.bottom}]}>
+            <View style={styles.container}>
+                <View
+                    style={styles.tabsContainer}
+                    onLayout={(e) => setTabWidth(e.nativeEvent.layout.width / Object.values(Tabs).length)}
+                >
+                    <Animated.View style={[styles.slider, animatedStyle, { width: tabWidth }]} />
+                    {Object.values(Tabs).map((tab, index) => (
+                        <TouchableOpacity
+                            key={tab}
+                            style={styles.tab}
+                            onPress={() => pagerRef.current?.setPage(index)}
+                        >
+                            <Text style={activeTab === tab ? styles.activeTabText : styles.tabText}>
+                                {tab}
+                            </Text>
+                        </TouchableOpacity>
+                    ))}
+                </View>
 
-            <PagerView
-                ref={pagerRef}
-                initialPage={0}
-                style={styles.pager}
-                onPageScroll={(e) => {
-                    const { position, offset } = e.nativeEvent;
-                    translateX.value = (position + offset) * tabWidth;
-                }}
-                onPageSelected={(e) => setActiveTab(Object.values(Tabs)[e.nativeEvent.position])}
-            >
-                <View>
-                    <HomeScreen />
-                </View>
-                <View>
-                    <HistoryScreen />
-                </View>
-            </PagerView>
-        </View>
+                <PagerView
+                    ref={pagerRef}
+                    initialPage={0}
+                    style={styles.pager}
+                    onPageScroll={(e) => {
+                        const { position, offset } = e.nativeEvent;
+                        translateX.value = (position + offset) * tabWidth;
+                    }}
+                    onPageSelected={(e) => setActiveTab(Object.values(Tabs)[e.nativeEvent.position])}
+                >
+                    <View>
+                        <HomeScreen />
+                    </View>
+                    <View>
+                        <HistoryScreen />
+                    </View>
+                </PagerView>
+            </View>
+        </LinearGradient>
     );
 };
 
 const styles = StyleSheet.create({
+    gradient: {
+        flex: 1,
+    },
     container: {
         flex: 1,
-        backgroundColor: "#f8f8f8",
     },
     tabsContainer: {
         marginTop: 24,
@@ -75,7 +87,7 @@ const styles = StyleSheet.create({
         shadowOffset: { width: 0, height: 2 },
         shadowRadius: 5,
         elevation: 3,
-        width: "70%",
+        width: "80%",
         alignSelf: "center",
         backgroundColor: "#ffffff",
     },
@@ -99,7 +111,7 @@ const styles = StyleSheet.create({
     slider: {
         position: "absolute",
         height: "100%",
-        backgroundColor: "#FFD966",
+        backgroundColor: "#FDD2BF",
         borderRadius: 25,
     },
     pager: {
