@@ -1,8 +1,12 @@
+import { NativeStackNavigationOptions } from '@react-navigation/native-stack';
 import { Stack } from "expo-router";
 
-export default function HomeLayout() {
-    return <Stack screenOptions={{ headerShown: false }}>
-        <Stack.Screen name="index" />
-        <Stack.Screen name="history"/>
-    </Stack>;
+const HomeLayout = () => {
+    return <Stack screenOptions={screenOptions} />
+}
+
+export default HomeLayout;
+
+const screenOptions: NativeStackNavigationOptions = {
+    headerShown: false
 }

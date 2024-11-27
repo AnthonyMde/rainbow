@@ -1,17 +1,17 @@
 import { StyleSheet, Text, View } from "react-native";
 
-const HistoryScreen = () => {
+const HomeScreen = () => {
     return <View style={styles.container}>
-        <Text>History screen.</Text>
+        <Text>Generator screen.</Text>
     </View>
 }
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        alignItems: 'center',
         justifyContent: 'center',
-        alignItems: 'center'
     }
 })
 
-export default HistoryScreen;
+export default HomeScreen;
