@@ -29,7 +29,7 @@ const HomePager = () => {
             locations={[0, 0.75, 1]}
             start={{ x: 0, y: 0 }}
             end={{ x: 1, y: 1 }}
-            style={[styles.gradient, {paddingTop: insets.top, paddingBottom: insets.bottom}]}>
+            style={[styles.gradient, { paddingTop: insets.top, paddingBottom: insets.bottom }]}>
             <View style={styles.container}>
                 <View
                     style={styles.tabsContainer}
@@ -59,12 +59,8 @@ const HomePager = () => {
                     }}
                     onPageSelected={(e) => setActiveTab(Object.values(Tabs)[e.nativeEvent.position])}
                 >
-                    <View>
-                        <HomeScreen />
-                    </View>
-                    <View>
-                        <HistoryScreen />
-                    </View>
+                    <HomeScreen />
+                    <HistoryScreen />
                 </PagerView>
             </View>
         </LinearGradient>
